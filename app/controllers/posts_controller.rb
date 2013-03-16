@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.all.sort_by(&:size)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -40,8 +40,12 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    @post = Post.new(params[:post])
-
+    @post = Post.new
+    user, lang, code = params[:post].values_at(:user, :language, :code)
+    @post.user = user
+    @post.language = lang
+    @post.code = code.read
+    @post.size = @post.code.bytesize
     respond_to do |format|
       if @post.save
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
@@ -57,9 +61,15 @@ class PostsController < ApplicationController
   # PUT /posts/1.json
   def update
     @post = Post.find(params[:id])
-
+    user, lang, code = params[:post].values_at(:user, :language, :code)
+    @post.user = user if user
+    @post.language = lang if lang
+    if code
+      @post.code = code.read
+      @post.size = @post.code.bytesize
+    end
     respond_to do |format|
-      if @post.update_attributes(params[:post])
+      if @post.save
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }
         format.json { head :no_content }
       else
