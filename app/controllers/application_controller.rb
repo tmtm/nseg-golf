@@ -15,4 +15,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def only_admin
+    unless @user.role == 'admin'
+      redirect_to :root
+    end
+  end
+
 end

@@ -24,7 +24,8 @@ ActiveRecord::Schema.define(:version => 20130316042024) do
 
   create_table "quests", :force => true do |t|
     t.string   "title"
-    t.string   "description"
+    t.text     "description"
+    t.string   "status"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
