@@ -1,4 +1,7 @@
 NsegGolf::Application.routes.draw do
+  resources :quests
+
+
   resources :sessions
 
 
