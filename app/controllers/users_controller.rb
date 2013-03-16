@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     end
   end
   before_filter :only=>[:edit, :update] do
-    unless params[:id].to_i == @uid
+    unless params[:id].to_i == @uid || @admin
       render :status => :forbidden, :text => "Forbidden"
     end
   end
