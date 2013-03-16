@@ -11,3 +11,11 @@
  *= require_self
  *= require_tree .
  */
+
+.logout {
+    text-align: right;
+}
+
+.message {
+    color: red;
+}

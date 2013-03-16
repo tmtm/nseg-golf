@@ -34,9 +34,10 @@ class PostsController < ApplicationController
   # POST /posts
   def create
     @post = Post.new
-    user, lang, code = params[:post].values_at(:user, :language, :code)
+    user = User.find(session[:user_id])
     @post.user = user
-    @post.language = lang
+    @post.language = params[:post][:language]
+    code = params[:post][:code]
     @post.code = code.read
     @post.size = @post.code.bytesize
     respond_to do |format|
@@ -51,8 +52,7 @@ class PostsController < ApplicationController
   # PUT /posts/1
   def update
     @post = Post.find(params[:id])
-    user, lang, code = params[:post].values_at(:user, :language, :code)
-    @post.user = user if user
+    lang, code = params[:post].values_at(:language, :code)
     @post.language = lang if lang
     if code
       @post.code = code.read

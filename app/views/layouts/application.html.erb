@@ -8,6 +8,14 @@
 </head>
 <body>
 
+<div class="logout">
+  <%= session[:user_id] && link_to('Logout', session_path(session[:user_id]), :method=>:delete) %>
+</div>
+
+<div class="message">
+  <%= flash[:error] %>
+</div>
+
 <%= yield %>
 
 </body>
