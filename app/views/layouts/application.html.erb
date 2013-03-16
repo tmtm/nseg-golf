@@ -8,9 +8,12 @@
 </head>
 <body>
 
-<div class="logout">
-  <%= session[:user_id] && link_to('Logout', session_path(session[:user_id]), :method=>:delete) %>
+<% if @uid %>
+<div class="navbar">
+  <%= link_to('Profile', edit_user_path(@user)) %>
+  <%= link_to('Logout', session_path(999), :method=>:delete) %>
 </div>
+<% end %>
 
 <div class="message">
   <%= flash[:error] %>

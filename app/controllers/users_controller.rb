@@ -1,7 +1,12 @@
 class UsersController < ApplicationController
   skip_before_filter :priv, :only=>[:new, :create]
-  before_filter :except=>[:new, :create] do
+  before_filter :except=>[:new, :create, :edit, :update] do
     unless @admin
+      render :status => :forbidden, :text => "Forbidden"
+    end
+  end
+  before_filter :only=>[:edit, :update] do
+    unless params[:id].to_i == @uid
       render :status => :forbidden, :text => "Forbidden"
     end
   end
@@ -57,7 +62,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to :root, notice: 'User was successfully updated.' }
       else
         format.html { render action: "edit" }
       end
