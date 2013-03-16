@@ -1,5 +1,47 @@
 <h1>Listing posts</h1>
 
+<pre>
+問題:
+
+プログラム開始時に、引数に整数 n を与え、
+その数字を漢数字に変換して出力してください。
+
+ただし 0 < n < 10000 とします。
+
+実行例:
+
+$ ruby sample.rb 1234
+千二百三十四
+$ ruby sample.rb 9021
+九千二十一
+$ ruby sample.rb 9130
+九千百三十
+
+
+Rubyのコード例:
+
+# coding: utf-8
+num = "〇一二三四五六七八九"
+result = ""
+n = ARGV[0].to_i
+
+thousand = n / 1000
+result << (thousand == 0 ? "" : "#{thousand == 1 ? "" : num[thousand]}千")
+n = n - thousand * 1000
+
+hundred = n / 100
+result << (hundred == 0 ? "" : "#{hundred == 1 ? "" : num[hundred]}百")
+n = n - hundred * 100
+
+ten = n / 10
+result << (ten == 0 ? "" : "#{ten == 1 ? "" : num[ten]}十")
+n = n - ten * 10
+
+result << (n == 0 ? "" : "#{num[n]}")
+puts result
+
+</pre>
+
 <table>
   <tr>
     <th>User</th>
