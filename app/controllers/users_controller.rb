@@ -1,4 +1,11 @@
 class UsersController < ApplicationController
+  skip_before_filter :priv, :only=>[:new, :create]
+  before_filter :except=>[:new, :create] do
+    unless @admin
+      render :status => :forbidden, :text => "Forbidden"
+    end
+  end
+
   # GET /users
   def index
     @users = User.all

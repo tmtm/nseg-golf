@@ -1,4 +1,11 @@
 class PostsController < ApplicationController
+  before_filter :only => [:show, :edit, :update, :destroy] do
+    post = Post.find(params[:id])
+    unless @admin || post.user.id == @uid
+      render :status => :forbidden, :text => "Forbidden"
+    end
+  end
+
   # GET /posts
   def index
     @posts = Post.all.sort_by(&:size)
@@ -34,8 +41,7 @@ class PostsController < ApplicationController
   # POST /posts
   def create
     @post = Post.new
-    user = User.find(session[:user_id])
-    @post.user = user
+    @post.user = @user
     @post.language = params[:post][:language]
     code = params[:post][:code]
     @post.code = code.read

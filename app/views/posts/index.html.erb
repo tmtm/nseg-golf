@@ -15,9 +15,9 @@
     <td><%= post.user.name %></td>
     <td><%= post.language %></td>
     <td><%= post.size %></td>
-    <td><%= link_to 'Show', post %></td>
-    <td><%= link_to 'Edit', edit_post_path(post) %></td>
-    <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Show', post if post.user.id==@uid || @admin %></td>
+    <td><%= link_to 'Edit', edit_post_path(post) if post.user.id==@uid || @admin %></td>
+    <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } if post.user.id==@uid || @admin %></td>
   </tr>
 <% end %>
 </table>
